@@ -14,7 +14,8 @@
             @enderror
 
             <label for="exampleInput" class="form-label">Client Name</label>
-            <input type="text" class="form-control" id="exampleInput" name="client_name" value="{{ old('client_name') }}">
+            <input type="text" class="form-control" id="exampleInput" name="client_name"
+                value="{{ old('client_name') }}">
             @error('client_name')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
@@ -22,6 +23,19 @@
             <div class="mb-3">
                 <label for="formFile" class="form-label">Image</label>
                 <input class="form-control" type="file" id="formFile" name="cover_image">
+            </div>
+
+            <div class="mb-3">
+                <label for="form-select" class="form-label">Types</label>
+                <select id="form-select" class="form-select" aria-label="Default select example" name='type_id'>
+                    <option value="">Select Type</option>
+                    @foreach ($types as $type)
+                        <option @selected($type->id == old('type_id')) value="{{ $type->id }}">{{ $type->name }}</option>
+                    @endforeach
+                </select>
+                @error('type_id')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="mt-4">
@@ -34,6 +48,7 @@
             </div>
         </div>
         <button type="submit" class="btn btn-success"><i class="fa-regular fa-floppy-disk"></i></button>
-        <a href="{{ route('admin.projects.index') }}" class="btn btn-primary btn-sm" tabindex="-1" role="button" aria-disabled="true"><i class="fa-regular fa-rectangle-list"></i></a>
+        <a href="{{ route('admin.projects.index') }}" class="btn btn-primary btn-sm" tabindex="-1" role="button"
+            aria-disabled="true"><i class="fa-regular fa-rectangle-list"></i></a>
     </form>
 @endsection

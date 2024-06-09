@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
@@ -32,7 +33,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.create');
+        $types = Type::all();
+        return view('admin.projects.create', compact('types'));
     }
 
     /**
@@ -82,7 +84,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.edit', compact('project'));
+        $types = Type::all();
+        return view('admin.projects.edit', compact('project', 'types'));
     }
 
     /**
@@ -138,7 +141,8 @@ class ProjectController extends Controller
                 'name'=> 'required|min:5|max:50',
                 'summary' => 'min:15|max:2000',
                 'client_name' => 'required',
-                'cover_image' => 'nullable|image'  //|max:256
+                'cover_image' => 'nullable|image',  //|max:256
+                'type_id' => 'nullable|exists:types,id'
             ]
         )->validate();
         return $validator;

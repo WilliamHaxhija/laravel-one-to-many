@@ -3,7 +3,8 @@
 @section('content')
     <h2 class="my-3">Edit Project</h2>
 
-    <form action="{{ route('admin.projects.update', ['project' => $project->slug]) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.projects.update', ['project' => $project->slug]) }}" method="POST"
+        enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -27,11 +28,25 @@
                 <input class="form-control" type="file" id="formFile" name="cover_image">
                 @if ($project->cover_image)
                     <div class="w-25 my-3">
-                        <img class="w-100" src="{{ asset('storage/' . $project->cover_image) }}" alt="{{ $project->name }}">
+                        <img class="w-100" src="{{ asset('storage/' . $project->cover_image) }}"
+                            alt="{{ $project->name }}">
                     </div>
                 @else
                     <small>No image uploaded.</small>
                 @endif
+            </div>
+
+            <div class="mb-3">
+                <label for="form-select" class="form-label">Types</label>
+                <select id="form-select" class="form-select" aria-label="Default select example" name='type_id'>
+                    <option value="">Select Type</option>
+                    @foreach ($types as $type)
+                        <option @selected($type->id == old('type_id', $project->type_id)) value="{{ $type->id }}">{{ $type->name }}</option>
+                    @endforeach
+                </select>
+                @error('type_id')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="form-floating mt-4">

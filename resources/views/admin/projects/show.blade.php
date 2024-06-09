@@ -16,6 +16,9 @@
             <strong>ID: </strong>{{ $project->id }}
         </div>
         <div>
+            <strong>Type: </strong>{{ $project->type ? $project->type->name : 'No Type' }}
+        </div>
+        <div>
             <strong>Created: </strong>{{ $project->created_at }}
         </div>
         <div>
